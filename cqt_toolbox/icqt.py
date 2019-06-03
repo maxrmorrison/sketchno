@@ -10,19 +10,19 @@ def icqt(Xcq):
     Input parameters:
           Xcq                : dict obtained by cqt(...)
 
-    Output parameters: 
+    Output parameters:
           rec_signal         : reconstructed time domain signal
-          inv_filter_bank    : synthesis filterbank 
+          inv_filter_bank    : synthesis filterbank
 
     References:
-      C. Schorkhuber, A. Klapuri, N. Holighaus, and M. Dorfler. A Matlab 
-      Toolbox for Efficient Perfect Reconstruction log-f Time-Frequecy 
+      C. Schorkhuber, A. Klapuri, N. Holighaus, and M. Dorfler. A Matlab
+      Toolbox for Efficient Perfect Reconstruction log-f Time-Frequecy
       Transforms.
- 
+
       G. A. Velasco, N. Holighaus, M. Dorfler, and T. Grill. Constructing an
       invertible constant-Q transform with non-stationary Gabor frames.
       Proceedings of DAFX11, Paris, 2011.
-      
+
       N. Holighaus, M. Dorfler, G. Velasco, and T. Grill. A framework for
       invertible, real-time constant-q transforms. Audio, Speech, and
       Language Processing, IEEE Transactions on, 21(4):775-785, April 2013.
@@ -32,15 +32,20 @@ def icqt(Xcq):
     Translation from MATLAB by: Trent Cwiok (cwiok@u.northwestern.edu)
                                 Fatemeh Pishdadian (fpishdadian@u.northwestern.edu)
     '''
+    # print(len(Xcq['filter_bank']))
+    # print(Xcq['shift'])
+    # print(Xcq['bw_bins'])
     Xcq['inv_filter_bank'] = gen_inv_filterbank(Xcq['filter_bank'],Xcq['shift'],Xcq['bw_bins'])
+    print(len(Xcq['inv_filter_bank']))
 
     # We currently assume rasterize is always full
     cqt = [x for x in Xcq['cqt']]
+    print(len(cqt))
     cqt.insert(0,Xcq['cqt_DC'])
     cqt.append(Xcq['cqt_Nyq'])
-    
+
     rec_signal = apply_inv_filterbank(cqt,Xcq['inv_filter_bank'],Xcq['shift'],Xcq['sig_len'],Xcq['phasemode'])
-    
+
     inv_filter_bank = Xcq['inv_filter_bank']
-    
+
     return rec_signal, inv_filter_bank

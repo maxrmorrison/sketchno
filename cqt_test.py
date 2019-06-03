@@ -2,6 +2,7 @@ import argparse
 import librosa
 import numpy as np
 import os
+import pickle
 import scipy.signal as signal
 import time
 from matplotlib import pyplot as plt
@@ -10,17 +11,20 @@ from cqt_toolbox.icqt import icqt
 
 def main(audio_file):
     # cqt parameters
-    fmin = 27.5*2**(0/12)
-    fmax = 27.5*2**(87/12)
-    fres = 16 # bins per octave
+    fmin = 32.7 # C1
+    fmax = 16744 # C10
+    fres = 12 # bins per octave
     gamma = 10
 
-    audio, sampling_rate = librosa.load(audio_file, sr=16000)
+    audio, sampling_rate = librosa.load(audio_file, sr=22050)
+    audio = audio[:22050*8]
 
     start = time.clock()
 
     # Compute cqts of all four signals
     Xcq1 = cqt(audio, fres, sampling_rate, fmin, fmax, gamma=gamma)
+    with open('cqt_params.pkl', 'wb') as f:
+        pickle.dump(Xcq1, f)
     Xcqt1 = Xcq1['cqt']
     print(Xcqt1.shape)
 
