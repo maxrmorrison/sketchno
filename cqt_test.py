@@ -17,7 +17,7 @@ def main(audio_file):
     gamma = 10
 
     audio, sampling_rate = librosa.load(audio_file, sr=22050)
-    audio = audio[:22050*8]
+    audio = audio[:11025]
 
     start = time.clock()
 
@@ -32,7 +32,7 @@ def main(audio_file):
     cqt_time = time.clock()
 
     # Take the icqt before plotting for timing purposes
-    re_signal1, gd = icqt(Xcq1)
+    re_signal1 = icqt(Xcq1)
 
     # Clock the icqt time
     icqt_time = time.clock() - cqt_time

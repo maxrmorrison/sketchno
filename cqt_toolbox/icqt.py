@@ -4,7 +4,7 @@ from cqt_toolbox.gen_inv_filterbank import gen_inv_filterbank
 from cqt_toolbox.apply_inv_filterbank import  apply_inv_filterbank
 
 
-def icqt(Xcq):
+def icqt(Xcq, filters=None):
     # type: (dict) -> (ndarray, list)
     '''
     Input parameters:
@@ -32,20 +32,13 @@ def icqt(Xcq):
     Translation from MATLAB by: Trent Cwiok (cwiok@u.northwestern.edu)
                                 Fatemeh Pishdadian (fpishdadian@u.northwestern.edu)
     '''
-    # print(len(Xcq['filter_bank']))
-    # print(Xcq['shift'])
-    # print(Xcq['bw_bins'])
-    Xcq['inv_filter_bank'] = gen_inv_filterbank(Xcq['filter_bank'],Xcq['shift'],Xcq['bw_bins'])
-    print(len(Xcq['inv_filter_bank']))
+    if filters is None:
+      filters = gen_inv_filterbank(Xcq['filter_bank'],Xcq['shift'],Xcq['bw_bins'])
 
     # We currently assume rasterize is always full
     cqt = [x for x in Xcq['cqt']]
-    print(len(cqt))
-    cqt.insert(0,Xcq['cqt_DC'])
+    cqt.insert(0, Xcq['cqt_DC'])
     cqt.append(Xcq['cqt_Nyq'])
 
-    rec_signal = apply_inv_filterbank(cqt,Xcq['inv_filter_bank'],Xcq['shift'],Xcq['sig_len'],Xcq['phasemode'])
-
-    inv_filter_bank = Xcq['inv_filter_bank']
-
-    return rec_signal, inv_filter_bank
+    return apply_inv_filterbank(
+        cqt, filters, Xcq['shift'], Xcq['sig_len'], Xcq['phasemode'])
