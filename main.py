@@ -9,7 +9,7 @@ from sketchno import FrameRate, invert_image, Webcam
 
 image = None
 processed = None
-signal_q = queue.Queue(maxsize=2)
+signal_q = queue.Queue(maxsize=1)
 
 event = threading.Event()
 img_lock = threading.Lock()
@@ -53,8 +53,8 @@ def start_processor():
     global signal_q
 
     location = 0
-    current_played = -4
-    prev_played = -5
+    current_played = -3
+    prev_played = -4
     while not event.is_set():
 
         # Get current image
@@ -82,8 +82,8 @@ def start_processor():
                     processed[:, prev_played * timepoints:(prev_played + 1) * timepoints] -= 0.5
 
             # Ramp to prevent clicks
-            sig[:200] = np.linspace(0., sig[200], num=200)
-            sig[-200:] = np.linspace(sig[-200], 0., num=200)
+            sig[:400] = np.linspace(0., sig[400], num=400)
+            sig[-400:] = np.linspace(sig[-400], 0., num=400)
 
             # Post signal to DAC
             signal_q.put(sig)
