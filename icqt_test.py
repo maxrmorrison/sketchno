@@ -20,9 +20,9 @@ def main(image_file):
     with open('cqt_params.pkl', 'rb') as f:
         Xcq = pickle.load(f)
         scale = np.mean(np.abs(Xcq['cqt']), axis=1).reshape((100, 1))
-    Xcq['cqt'] = (image * scale).astype('complex')
+    Xcq['cqt'] = np.flipud((image * scale).astype('complex'))
 
-    signal, _ = icqt(Xcq)
+    signal = icqt(Xcq)
 
     signal /= np.max(np.abs(signal))
     print(signal.max(), signal.min(), len(signal), signal.dtype)
