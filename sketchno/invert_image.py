@@ -5,7 +5,7 @@ from cqt_toolbox.icqt import icqt
 from cqt_toolbox.gen_inv_filterbank import gen_inv_filterbank
 
 
-def invert_image(image, threshold=0.35):
+def invert_image(image, threshold=0.32):
     if not hasattr(invert_image, 'cqt'):
         with open('cqt_params.pkl', 'rb') as f:
             invert_image.cqt = pickle.load(f)

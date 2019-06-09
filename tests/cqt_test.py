@@ -17,7 +17,7 @@ def main(audio_file):
     gamma = 10
 
     audio, sampling_rate = librosa.load(audio_file, sr=22050)
-    audio = audio[:11025]
+    audio = audio[:int(11025/4)]
 
     start = time.clock()
 

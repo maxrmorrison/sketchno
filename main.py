@@ -1,5 +1,4 @@
 import cv2
-import logging
 import numpy as np
 import queue
 import sounddevice as sd
@@ -37,7 +36,7 @@ def start_dac():
         stream = sd.OutputStream(
             samplerate=22050,
             channels=1,
-            blocksize=11025,
+            blocksize=int(11025/4),
             callback=to_dac,
             finished_callback=event.set)
 
@@ -63,7 +62,7 @@ def start_processor():
 
         if img is not None:
             # Get current beat
-            timepoints = int(img.shape[1] / 8)
+            timepoints = int(img.shape[1] / (8 * 4))
             img_slice = img[:, location * timepoints:(location + 1) * timepoints]
 
             # Invert image spectrogram to audio
@@ -73,7 +72,7 @@ def start_processor():
             # Display the spectrogram
             with proc_lock:
                 if processed is None:
-                    processed = np.zeros((proc.shape[0], proc.shape[1] * 8))
+                    processed = np.zeros((proc.shape[0], proc.shape[1] * (8 * 4)))
 
                 processed[:, location * timepoints:(location + 1) * timepoints] = proc
                 if current_played >= 0:
@@ -82,15 +81,15 @@ def start_processor():
                     processed[:, prev_played * timepoints:(prev_played + 1) * timepoints] -= 0.5
 
             # Ramp to prevent clicks
-            sig[:400] = np.linspace(0., sig[400], num=400)
-            sig[-400:] = np.linspace(sig[-400], 0., num=400)
+            sig[:300] = np.linspace(0., sig[300], num=300)
+            sig[-300:] = np.linspace(sig[-300], 0., num=300)
 
             # Post signal to DAC
             signal_q.put(sig)
 
-            current_played = (current_played + 1) % 8 if current_played >= 0 else current_played + 1
-            prev_played = (prev_played + 1) % 8 if prev_played >= 0 else prev_played + 1
-            location = (location + 1) % 8
+            current_played = (current_played + 1) % (8 * 4) if current_played >= 0 else current_played + 1
+            prev_played = (prev_played + 1) % (8 * 4) if prev_played >= 0 else prev_played + 1
+            location = (location + 1) % (8 * 4)
 
 
 def start_webcam():
@@ -98,9 +97,6 @@ def start_webcam():
 
 
 if __name__ == '__main__':
-    format = "%(asctime)s: %(message)s"
-    logging.basicConfig(format=format, level=logging.INFO,
-                        datefmt="%H:%M:%S")
     t1 = threading.Thread(target=start_webcam)
     t2 = threading.Thread(target=start_dac, daemon=True)
     t3 = threading.Thread(target=start_processor, daemon=True)
