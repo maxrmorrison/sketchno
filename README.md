@@ -22,6 +22,16 @@ Sketchno synthesizes audio from a spectrogram via the inverse Constant-Q Transfo
 The magnitude spectrogram is extracted from the image by applying a thresholding operation to the image to remove bright pixels and then applying some simple filtering.
 The spectrogram phase is arbitrarily set to zero. Future work could integrate a realtime Griffin-Lim algorithm for better phase reconstruction [2].
 
+## Media
+### Video
+[![Video demonstration of Sketchno](https://img.youtube.com/vi/iRAMvKSQxk0/0.jpg)](https://www.youtube.com/watch?v=iRAMvKSQxk0)
+Video demonstration of Sketchno
+
+### Images
+![An example score used to perform with Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/white.jpg "An example score used to perform with Sketchno")
+
+![An example setup using Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/white.jpg "An example setup using Sketchno")
+
 ### Bibliography
  - [1] Brown, Judith C. "Calculation of a constant Q spectral transform." The Journal of the Acoustical Society of America 89.1 (1991): 425-434.
  - [2] Griffin, Daniel, and Jae Lim. "Signal estimation from modified short-time Fourier transform." IEEE Transactions on Acoustics, Speech, and Signal Processing 32.2 (1984): 236-243.
