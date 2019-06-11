@@ -28,9 +28,9 @@ The spectrogram phase is arbitrarily set to zero. Future work could integrate a 
 Video demonstration of Sketchno
 
 ### Images
-![An example score used to perform with Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/white.jpg "An example score used to perform with Sketchno")
+![An example score used to perform with Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/sketchno_score.jpg "An example score used to perform with Sketchno")
 
-![An example setup using Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/white.jpg "An example setup using Sketchno")
+![An example setup using Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/sketchno_setup.jpg "An example setup using Sketchno")
 
 ### Bibliography
  - [1] Brown, Judith C. "Calculation of a constant Q spectral transform." The Journal of the Acoustical Society of America 89.1 (1991): 425-434.
