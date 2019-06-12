@@ -29,11 +29,11 @@ The spectrogram phase is arbitrarily set to zero. Future work could integrate a 
 Video demonstration of Sketchno
 
 ### Images
-![An example score used to perform with Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/sketchno_score.jpg =400x400)
+![An example score used to perform with Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/sketchno_score.jpg)
 
 An example score used to perform with Sketchno
 
-![An example setup using Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/sketchno_setup.jpg =400x400)
+![An example setup using Sketchno](https://github.com/maxrmorrison/sketchno/blob/master/images/sketchno_setup.jpg)
 
 An example setup using Sketchno
 
